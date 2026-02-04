@@ -36,10 +36,10 @@ bool prev_mid_state = false;
 
 int intake_speed = 127;
 
-int selected_auton = 20;
+int selected_auton = 11;
 bool auton_selected = false;
 
-const float RAYCAST_RESET_ANGLE_RANGE = 20.0; // ± degrees from 0°/360° or 90°/270° 
+const float RAYCAST_RESET_ANGLE_RANGE = 3.0; // ± degrees from 0°/360° or 90°/270° 
 const float RAYCAST_RESET_MIN_ERROR = 0.0; // minimum error required before applying correction
 const float RAYCAST_RESET_MAX_ERROR = 3.0; // maximum error to restrict correction (e.g. matchloader depth)
 
@@ -112,10 +112,6 @@ void initialize() {
 
 	left_mg.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	right_mg.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-
-	// roller_optical.set_integration_time(20);
-
-	// roller_optical.set_led_pwm(100);
 	
 	pros::Task screen_task([&] {
 		while (!auton_selected) {
