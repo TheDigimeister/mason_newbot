@@ -15,7 +15,8 @@ pros::Distance roller_dist(21);
 
 
 pros::Motor lower(7);
-pros::Motor upper(-10);
+pros::Motor middle(-8);
+pros::Motor upper(10);
 
 pros::ADIDigitalOut level('B');
 pros::ADIDigitalOut matchload('C');
@@ -25,5 +26,5 @@ pros::ADIDigitalOut intake_up('A');
 pros::ADIDigitalOut parking('F');
 pros::ADIDigitalOut odom('G');
 
-pros::Optical roller_optical(8);
+// pros::Optical roller_optical(8);
 // pros::AIVision vision(21);

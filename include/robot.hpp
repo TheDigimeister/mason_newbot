@@ -18,6 +18,7 @@ extern pros::Distance roller_dist;
 extern pros::Distance long_goal_check;
 
 extern pros::Motor lower;
+extern pros::Motor middle;
 extern pros::Motor upper;
 
 extern pros::ADIDigitalOut level;
@@ -30,4 +31,4 @@ extern pros::ADIDigitalOut parking;
 
 extern bool odom_state;
 
-extern pros::Optical roller_optical;
+// extern pros::Optical roller_optical;

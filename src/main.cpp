@@ -113,9 +113,9 @@ void initialize() {
 	left_mg.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	right_mg.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
-	roller_optical.set_integration_time(20);
+	// roller_optical.set_integration_time(20);
 
-	roller_optical.set_led_pwm(100);
+	// roller_optical.set_led_pwm(100);
 	
 	pros::Task screen_task([&] {
 		while (!auton_selected) {
@@ -437,21 +437,28 @@ void opcontrol() {
 
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
 			lower.move(127);
+			middle.move(127);
 			if (roller_dist.get() > 50) {upper.move(50);}
-			else {upper.move(0);}
+			else {
+				upper.move(0); 
+				middle.move(0);
+			}
 		}
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
 			lower.move(-intake_speed);
+			middle.move(-intake_speed);
 			upper.move(-intake_speed);
 		}
 
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
 			lower.move(intake_speed);
+			middle.move(intake_speed);
 			upper.move(intake_speed);
 		}
 
 		else {
 			lower.move(0);
+			middle.move(0);
 			upper.move(0);
 		}
 

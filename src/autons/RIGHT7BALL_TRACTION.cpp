@@ -14,6 +14,7 @@ void right7BallTraction() {
     // 7-ball low goal side (31)
 
     lower.move(127);
+    middle.move(127);
     pros::Task upper_roller_hold([] {
         while(roller_dist.get() > 50) {upper.move(50);}
         upper.move(0);
@@ -32,23 +33,26 @@ void right7BallTraction() {
     chassis.turnToHeading(270, 700, {}, false);
     chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     
-    chassis.moveToPoint(-62, -48, 800, {.forwards=true, .maxSpeed=45, .minSpeed = 45});
-    pros::delay(800);
-    
+    chassis.moveToPoint(-62, -48, 400, {.forwards=true, .maxSpeed=45, .minSpeed = 45});
+    pros::delay(400);
+    chassis.turnToHeading(270, 400);
+    pros::delay(400);
+    chassis.setPose(chassis.getPose().x, positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
+
     // move to goals
     upper.move(0);
+    middle.move(127);
     lower.move(127);
 
     pros::Task align_score2{[=]{
-        while(back_dist.get() > 80) { pros::delay(50);}
-        upper.move(100);
+        while(back_dist.get() > 100) { pros::delay(50);}
+        upper.move(127);
     }}; 
 
-    chassis.moveToPoint(-24, -49, 500, {.forwards=false});
+    chassis.moveToPoint(-24, -49, 300, {.forwards=false, .minSpeed=127});
     chassis.moveToPoint(-24, -49, 2500, {.forwards=false, .maxSpeed=67});
 
     pros::delay(2500);
-    return;
 
     // descore
 
@@ -61,8 +65,10 @@ void right7BallTraction() {
     odom.set_value(false);
     matchload.set_value(false);
 
-    upper.move(0);
     lower.move(0);
+    middle.move(0);
+    upper.move(0);
+
 
 
 
