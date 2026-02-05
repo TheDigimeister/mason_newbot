@@ -26,5 +26,5 @@ pros::ADIDigitalOut intake_up('A');
 pros::ADIDigitalOut parking('F');
 pros::ADIDigitalOut odom('G');
 
-// pros::Optical roller_optical(8);
+pros::Optical roller_optical(18);
 // pros::AIVision vision(21);

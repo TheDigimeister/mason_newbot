@@ -11,6 +11,7 @@ void rightSoloAWP() {
     matchload.set_value(true);
 
     lower.move(127);
+    middle.move(127);
     pros::Task upper_roller_hold([] {
         while(roller_dist.get() > 50) {upper.move(50);}
         upper.move(0);
@@ -28,23 +29,24 @@ void rightSoloAWP() {
     lower.move(127);
 
     pros::Task align_score2{[=]{
-        while(back_dist.get() > 80) { pros::delay(50);}
+        while(back_dist.get() > 100) { pros::delay(50);}
         upper.move(127);
     }}; 
 
-    chassis.moveToPoint(-24, -49, 1600, {.forwards=false, .maxSpeed=100});
+    chassis.moveToPoint(-24, -49, 1800, {.forwards=false, .maxSpeed=100});
     matchload.set_value(false);
 
-    pros::delay(1600);
+    pros::delay(1800);
     upper.move(0);
 
     chassis.turnToHeading(0, 1000, {}, false);
     chassis.setPose(positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, WEST), positionFromRaycast(back_dist.get()*MM_TO_IN, BACK_DIST_OFFSET, SOUTH), chassis.getPose().theta);
-
-    chassis.moveToPoint(-23,15,1200, {.maxSpeed=80});
-    pros::delay(1200);
+    
+    chassis.moveToPoint(-23,-24,500, {.maxSpeed=80, .minSpeed=80, .earlyExitRange=5});
+    chassis.moveToPoint(-23,15,1000, {.maxSpeed=80});
+    pros::delay(1000);
     matchload.set_value(true);
-    chassis.turnToHeading(315, 700, {}, false);
+    chassis.turnToHeading(305, 700, {}, false);
     level.set_value(false);
     left_mg.move(-50);
     right_mg.move(-50);
@@ -57,11 +59,13 @@ void rightSoloAWP() {
     // chassis.turnToPoint(-8, 6, 700, {.forwards=false});
 
     // chassis.moveToPoint(-8, 6, 950, {.forwards=false}, false);
-    lower.move(72);
-    upper.move(72);
+    lower.move(127);
+    middle.move(41);
+    upper.move(41);
     pros::delay(950);
     upper.move(0);
     lower.move(127);
+    middle.move(127);
 
     chassis.moveToPoint(-52, 40, 1000, {.maxSpeed=80});
     chassis.turnToHeading(270, 700, {}, false);
@@ -72,7 +76,7 @@ void rightSoloAWP() {
 
     // long goal score
         pros::Task align_score3{[=]{
-        while(back_dist.get() > 80) { pros::delay(50);}
+        while(back_dist.get() > 100) { pros::delay(50);}
         upper.move(127);
         lower.move(127);
     }};
@@ -81,5 +85,6 @@ void rightSoloAWP() {
     chassis.moveToPoint(-25, 49, 1300, {.forwards=false, .maxSpeed=80}, false);
     matchload.set_value(false);
     lower.move(127);
+    middle.move(127);
     upper.move(127);
 }

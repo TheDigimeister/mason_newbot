@@ -31,4 +31,4 @@ extern pros::ADIDigitalOut parking;
 
 extern bool odom_state;
 
-// extern pros::Optical roller_optical;
+extern pros::Optical roller_optical;
