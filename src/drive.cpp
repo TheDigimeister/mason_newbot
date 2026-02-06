@@ -21,8 +21,8 @@ pros::Imu inertial(11);
 lemlib::TrackingWheel vertical_tracking_wheel(&vert_odom, lemlib::Omniwheel::NEW_2 * 96.0/100.982, 1.0);
 // lemlib::TrackingWheel hor_tracking_wheel(&hor_odom, lemlib::Omniwheel::NEW_2 * 96.0/101.41, -2.866); // lemlib::Omniwheel::NEW_2 * (117.25/126.25)
 
-lemlib::TrackingWheel left_wheel(&left_mg, lemlib::Omniwheel::NEW_325 * 96/94.578, -11.5/2, 450);
-lemlib::TrackingWheel right_wheel(&right_mg, lemlib::Omniwheel::NEW_325 * 96/94.578, 11.5/2, 450);
+lemlib::TrackingWheel left_wheel(&left_mg, lemlib::Omniwheel::NEW_325 * 96/96, -11.5/2, 450); // 94.578
+lemlib::TrackingWheel right_wheel(&right_mg, lemlib::Omniwheel::NEW_325 * 96/96, 11.5/2, 450); // 94.578
 
 lemlib::OdomSensors sensors(&left_wheel, // vertical tracking wheel 1, set to null
                             &right_wheel, // vertical tracking wheel 2, set to nullptr as we are using IMEs
@@ -46,7 +46,7 @@ lemlib::ControllerSettings lateral_controller(10.583, // proportional gain (kP)
 // PERFECT angular PID controller
 lemlib::ControllerSettings angular_controller(2.0, // proportional gain (kP)
                                               0.02, // integral gain (kI) // 0.04
-                                              16.7, // derivative gain (kD)
+                                              15.67, // derivative gain (kD)
                                               21, // anti windup
                                               1, // small error range, in degrees
                                               300, // small error range timeout, in milliseconds

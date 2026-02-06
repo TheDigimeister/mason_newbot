@@ -43,7 +43,7 @@ bool auton_selected = false;
 
 const float RAYCAST_RESET_ANGLE_RANGE = 6.0; // ± degrees from 0°/360° or 90°/270° 
 const float RAYCAST_RESET_MIN_ERROR = 0.0; // minimum error required before applying correction
-const float RAYCAST_RESET_MAX_ERROR = 3.0; // maximum error to restrict correction (e.g. matchloader depth)
+const float RAYCAST_RESET_MAX_ERROR = 2.0; // maximum error to restrict correction (e.g. matchloader depth)
 
 const int ALLIANCECOLOR = RED;
 const int OPPONENTCOLOR = BLUE;
@@ -139,9 +139,9 @@ void initialize() {
 
 	pros::Task distance_resets([&] {
 
-		while(false) {
+		while(true) {
 
-			float frontReading = front_dist.get() * MM_TO_IN;
+			float frontReading = fmax(front_dist.get(),front_disttwo.get()) * MM_TO_IN;
 			float leftReading = left_dist.get() * MM_TO_IN;
 			float rightReading = right_dist.get() * MM_TO_IN;
 			float backReading = back_dist.get() * MM_TO_IN;
@@ -150,7 +150,7 @@ void initialize() {
 			float backLeftReading = backleft_dist.get() * MM_TO_IN;
 			float backRightReading = backright_dist.get() * MM_TO_IN;
 
-			float frontConfidence = front_dist.get_confidence();
+			float frontConfidence = fmin(front_dist.get_confidence(),front_disttwo.get_confidence());
 			float leftConfidence = left_dist.get_confidence();
 			float rightConfidence = right_dist.get_confidence();
 			float backConfidence = back_dist.get_confidence();
@@ -250,6 +250,7 @@ void initialize() {
 
 				error_x = fabs(estimated_x - currentPose.x);
 				error_y = fabs(estimated_y - currentPose.y);
+				// error_y = 144; // disable y correction
 
 				if (x_deviation >= RAYCAST_RESET_MIN_ERROR && x_deviation <= RAYCAST_RESET_MAX_ERROR && error_x > 0.3){
 					chassis.setPose(estimated_x, chassis.getPose().y, chassis.getPose().theta);
@@ -267,7 +268,7 @@ void initialize() {
 	});
 
 	pros::Task anti_jam([=]{
-		while(true){
+		while(false){
 			if(lower.get_current_draw() > 2400 && fabs(lower.get_actual_velocity()) < 20) {
 				int target = lower.get_target_velocity();
 				lower.move(-127);
@@ -287,7 +288,7 @@ void initialize() {
 	});
 
 	pros::Task print_coordinates([=](){
-		while (true) {
+		while (false) {
 			if (true) {
 				master.print(0, 0, "X:%.2fY:%.2fT:%.2f", chassis.getPose().x, chassis.getPose().y, chassis.getPose().theta);
 				pros::delay(100);
@@ -444,7 +445,6 @@ void opcontrol() {
 			if (roller_dist.get() > 50) {upper.move(50);}
 			else {
 				upper.move(0); 
-				middle.move(0);
 			}
 		}
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {

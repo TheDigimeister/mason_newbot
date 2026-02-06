@@ -3,11 +3,12 @@
 #include "pros/ai_vision.hpp"
 #include "pros/optical.hpp"
 
-pros::Distance front_dist(20);
+pros::Distance front_dist(16);
+pros::Distance front_disttwo(12);
 pros::Distance back_dist(19);
 pros::Distance left_dist(17);
 pros::Distance right_dist(14);
-pros::Distance frontleft_dist(16);
+pros::Distance frontleft_dist(20);
 pros::Distance frontright_dist(15);
 pros::Distance backleft_dist(18);
 pros::Distance backright_dist(13);
