@@ -38,7 +38,7 @@ bool prev_mid_state = false;
 
 int intake_speed = 127;
 
-int selected_auton = 12;
+int selected_auton = 4;
 bool auton_selected = false;
 
 const float RAYCAST_RESET_ANGLE_RANGE = 6.0; // ± degrees from 0°/360° or 90°/270° 
@@ -50,24 +50,11 @@ const int OPPONENTCOLOR = BLUE;
 
 const char* auton_names[] = {
     "None",
-    "Bruh",
-    "Bruh", 
-    "Bruh",
-    "Bruh",
-    "Bruh",
-    "Bruh",
-    "Bruh",
-	"Bruh",
 	"SOLO AWP",
 	"Super Low Goal",
 	"Super Middle Goal",
-	"Pick me, Mason or I'm going to crash out",
+	"Skills",
 	"PID Tune",
-	"Left Slow 7 ball",
-    "Right Slow 7 ball",
-	"Bruh",
-	"I'm Him",
-	"Super Middle Goal 2",
 	"Super Middle Goal 2 - No Hit",
 	"Right 7 Ball TRACTION",
 };
@@ -85,14 +72,14 @@ void on_center_button() {
 void on_left_button() {
     if (!auton_selected) {
         selected_auton--;
-        if (selected_auton < 1) selected_auton = 20; // Wrap to last auton
+        if (selected_auton < 1) selected_auton = 7; // Wrap to last auton
     }
 }
 
 void on_right_button() {
     if (!auton_selected) {
         selected_auton++;
-        if (selected_auton > 20) selected_auton = 1; // Wrap to first auton
+        if (selected_auton > 7) selected_auton = 1; // Wrap to first auton
     }
 }
 
@@ -332,63 +319,24 @@ void autonomous() {
 
 	switch (selected_auton) {
 		case 1:
-			left9ball();
-			break;
-		case 2:
-			left7ball();
-			break;
-		case 3:
-			leftmiddlegoal();
-			break;
-		case 4:
-			right9ball();
-			break;
-		case 5:
-			right7ball();
-			break;
-		case 6:
-			skills_unsafe();
-			break;
-		case 7:
-			skills_safe();
-			break;
-		case 8: 
-			rightLowGoal();
-			break;
-		case 9:
 			rightSoloAWP();
 			break;
-		case 10:
+		case 2:
 			superLowGoal();
 			break;
-		case 11:
+		case 3:
 			superMiddleGoal();
 			break;
-		case 12:
-			testing();
+		case 4:
+			skills();
 			break;
-		case 13:
+		case 5:
 			pidTune();
 			break;
-		case 14:
-			leftslow7Ball();
-			break;
-		case 15:
-			rightslow7Ball();
-			break;
-		case 16:
-			oldtesting();
-			break;
-		case 17:
-			imHim();
-			break;
-		case 18:
-			superMiddleGoal2();
-			break;
-		case 19:
+		case 6:
 			superMiddleGoal2NoHit();
 			break;
-		case 20:
+		case 7:
 			right7BallTraction();
 			break;
 	}
