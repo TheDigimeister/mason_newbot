@@ -38,7 +38,7 @@ bool prev_mid_state = false;
 
 int intake_speed = 127;
 
-int selected_auton = 4;
+int selected_auton = 8;
 bool auton_selected = false;
 
 const float RAYCAST_RESET_ANGLE_RANGE = 6.0; // ± degrees from 0°/360° or 90°/270° 
@@ -57,6 +57,7 @@ const char* auton_names[] = {
 	"PID Tune",
 	"Super Middle Goal 2 - No Hit",
 	"Right 7 Ball TRACTION",
+	"Skills Experimental"
 };
 
 /**
@@ -72,14 +73,14 @@ void on_center_button() {
 void on_left_button() {
     if (!auton_selected) {
         selected_auton--;
-        if (selected_auton < 1) selected_auton = 7; // Wrap to last auton
+        if (selected_auton < 1) selected_auton = 8; // Wrap to last auton
     }
 }
 
 void on_right_button() {
     if (!auton_selected) {
         selected_auton++;
-        if (selected_auton > 7) selected_auton = 1; // Wrap to first auton
+        if (selected_auton > 8) selected_auton = 1; // Wrap to first auton
     }
 }
 
@@ -126,7 +127,7 @@ void initialize() {
 
 	pros::Task distance_resets([&] {
 
-		while(true) {
+		while(false) {
 
 			float frontReading = fmax(front_dist.get(),front_disttwo.get()) * MM_TO_IN;
 			float leftReading = left_dist.get() * MM_TO_IN;
@@ -275,7 +276,7 @@ void initialize() {
 	});
 
 	pros::Task print_coordinates([=](){
-		while (false) {
+		while (true) {
 			if (true) {
 				master.print(0, 0, "X:%.2fY:%.2fT:%.2f", chassis.getPose().x, chassis.getPose().y, chassis.getPose().theta);
 				pros::delay(100);
@@ -338,6 +339,9 @@ void autonomous() {
 			break;
 		case 7:
 			right7BallTraction();
+			break;
+		case 8:
+			skills_experimental();
 			break;
 	}
 

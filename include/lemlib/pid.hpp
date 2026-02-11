@@ -60,7 +60,7 @@ class PID {
          * @endcode
          */
         void reset();
-    protected:
+    // protected:
         // gains
         const float kP;
         const float kI;

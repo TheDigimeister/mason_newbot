@@ -46,6 +46,8 @@
 #include "robot.hpp"
 #include "utils.hpp"
 #include "autons.hpp"
+#include "quintic_profile.hpp"
+#include "quintic_motion.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
