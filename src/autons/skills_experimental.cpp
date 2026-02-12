@@ -29,29 +29,29 @@ void skills_experimental(){
 
 
     #pragma region redParkingClear
-    left_mg.move(69);
-    right_mg.move(69);
+    left_mg.move(64);
+    right_mg.move(64);
     while(front_disttwo.get() >= 1750 || front_disttwo.get() <= 600){pros::delay(20);}
-    matchload.set_value(true);
+    // matchload.set_value(true);
     while(front_disttwo.get() >= 1100 || front_disttwo.get() <= 600){pros::delay(20);}
 
     #pragma region middleGoalScore
 
-    chassis.turnToHeading(90, 1000, {}, false);
+    chassis.turnToHeading(90, 1450, {.minSpeed=16}, false);
     chassis.setPose(positionFromRaycast(back_dist.get() * MM_TO_IN, BACK_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get() * MM_TO_IN, LEFT_DIST_OFFSET, NORTH),chassis.getPose().theta);
     matchload.set_value(false);
     lower.move(127);
 
-    quintic::moveToPoint(chassis,-24, 24, 1500, {.async=true});
-    pros::delay(700);
+    quintic::moveToPoint(chassis,-24, 24, 1700, {.async=true});
+    pros::delay(800);
     matchload.set_value(true);
     middle.move(0);
     // chassis.turnToHeading(270, 1000, {}, false);
     // chassis.setPose(positionFromRaycast(front_dist.get() * MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(right_dist.get() * MM_TO_IN, RIGHT_DIST_OFFSET, NORTH),chassis.getPose().theta);
 
     pros::delay(900);
-    chassis.turnToPoint(-9, 12.7, 1500, {.forwards=false, .maxSpeed=50}, false);
-    quintic::moveToPoint(chassis,-9,12.7, 2000, {.forwards=false, .async=false});
+    chassis.turnToPoint(-10.5, 12.5, 1500, {.forwards=false, .maxSpeed=50, .minSpeed=16}, false);
+    quintic::moveToPoint(chassis,-10.5,12.5, 1200, {.forwards=false, .async=false});
     matchload.set_value(true);
     // lower.move(0);
     // middle.move(0);
@@ -101,10 +101,10 @@ void skills_experimental(){
         }
         upper.move(0);
     });
-    quintic::moveToPose(chassis,-51, 68, 270, 2500, {.async=false});
+    quintic::moveToPose(chassis,-51, 82, 270, 3000, {.async=false});
     left_mg.move(50);
     right_mg.move(50);
-    pros::delay(1200);
+    pros::delay(1700);
     left_mg.move(-50);
     right_mg.move(-50);
     pros::delay(200);
@@ -133,16 +133,13 @@ void skills_experimental(){
     // chassis.turnToPoint(-36, 64, 1000, {.forwards=false, .maxSpeed=80, .minSpeed=5});
     quintic::moveToPoint(chassis,-24, 24, 1500, {.forwards=false, .async=false});
     matchload.set_value(false);
-    quintic::moveToPoint(chassis,47, 47, 2500, {.forwards=false, .async=false});
+    chassis.turnToPoint(20, 34, 1000, {.forwards=false, .minSpeed=20});
+    quintic::moveToPoint(chassis,20, 34, 2000, {.forwards=false, .async=false});
     lower.move(127);
     middle.move(127);
-    matchload.set_value(false);
+    // matchload.set_value(false);
     level.set_value(true);
-    chassis.turnToHeading(90, 1000, {.minSpeed=10}, false);
-    chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, NORTH), chassis.getPose().theta);
 
-    // quintic::moveToPoint(chassis, 47, 48, 2000, {.forwards=false, .async=false});
-    // chassis.turnToHeading(90, 1000, {.minSpeed=5}, false);    
     pros::Task align_score2{[=]{
         while(back_dist.get() > 100) { pros::delay(50);}
         lower.move(127);
@@ -150,23 +147,28 @@ void skills_experimental(){
         upper.move(127);
     }}; 
 
-    quintic::moveToPoint(chassis, 24, 48.5, 2000, {.forwards=false, .async=false});
-    
-    chassis.moveToPoint(25, 50.75, 2300, {.forwards=false, .maxSpeed=50});
-    matchload.set_value(true);
-    pros::delay(2600);
-    lower.move(127);
-    middle.move(127);
-    upper.move(127);
-    
-    #pragma region NEMatchload
-    // chassis.moveToPoint(48, 47, 1000, {.minSpeed=45, .earlyExitRange=5});
-    chassis.turnToHeading(90, 1000, {}, false);
+    chassis.swingToHeading(90,lemlib::DriveSide::RIGHT, 1500, {.direction=lemlib::AngularDirection::CCW_COUNTERCLOCKWISE, .minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, NORTH), chassis.getPose().theta);
+    left_mg.move(-30);
+    right_mg.move(-30);
+    pros::delay(2000);
+    // quintic::moveToPoint(chassis, 47, 48, 2000, {.forwards=false, .async=false});
+    // chassis.turnToHeading(90, 1000, {.minSpeed=5}, false);    
+
+    // quintic::moveToPoint(chassis, 24, 49, 2000, {.forwards=false, .async=false});
     
+    left_mg.move(50);
+    right_mg.move(50);
+    pros::delay(200);
+
+    chassis.turnToHeading(90, 1500, {.minSpeed=15}, false);
+    chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, NORTH), chassis.getPose().theta);
     lower.move(127);
     middle.move(127);
     upper.move(127);
+    matchload.set_value(true);
+
+    #pragma region NEMatchload
 
     pros::Task roller_hold1b([&] {
         while(roller_dist.get() > 50) {
@@ -178,8 +180,15 @@ void skills_experimental(){
         upper.move(0);
     });
     
-    chassis.moveToPoint(64, 46, 3000, {.forwards=true, .maxSpeed=55, .minSpeed=55});
-    pros::delay(3000);
+    quintic::moveToPoint(chassis, 60, 48.5, 2000, {.forwards=true, .async=false});
+    pros::delay(2000);
+
+    left_mg.move(-50);
+    right_mg.move(-50);
+    pros::delay(200);
+
+    chassis.turnToHeading(90, 1500, {.minSpeed=15}, false);
+    chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, NORTH), chassis.getPose().theta);
 
 
     #pragma region NELongGoalScore2
@@ -189,13 +198,16 @@ void skills_experimental(){
         middle.move(127);
         upper.move(127);
     }}; 
-    chassis.moveToPoint(25, 49.5, 3000, {.forwards=false, .maxSpeed=55});
-    pros::delay(3000);
+    quintic::moveToPoint(chassis,25, 49.5, 2000, {.forwards=false, .async=false});
+    pros::delay(2000);
+
+    #pragma region blueParkingClear
+
     lower.move(127);
     middle.move(127);
     upper.move(127);
 
-    chassis.turnToHeading(90, 500, {}, false);
+    chassis.turnToHeading(90, 1500, {.minSpeed=15}, false);
 
     chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST),positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, NORTH),chassis.getPose().theta);
 
@@ -209,45 +221,25 @@ void skills_experimental(){
         upper.move(0);
     });
 
-    #pragma region blueParkingClear
     chassis.moveToPoint(50,58,1000);
     chassis.turnToPoint(70, 24, 1000);
-    chassis.moveToPoint(70, 24, 1000, {.maxSpeed=100, .minSpeed=20}, false);
-    // chassis.moveToPose(69, 16, 178, 2500, {.horizontalDrift=15, .lead=0.4, .maxSpeed=80, .minSpeed=30}, false);
+    chassis.moveToPoint(70, 24, 1000, {.maxSpeed=100, .minSpeed=64}, false);
     level.set_value(true);
-    left_mg.move(20);
-    right_mg.move(20);
+    left_mg.move(64);
+    right_mg.move(64);
     pros::delay(200);
-    left_mg.move(0);
-    right_mg.move(0);
+    // left_mg.move(0);
+    // right_mg.move(0);
     pros::delay(100);
-    left_mg.move(69);
-    right_mg.move(69);
+    left_mg.move(64);
+    right_mg.move(80);
     pros::delay(1800);
-    while(front_disttwo.get() >= 1400){pros::delay(20);}
-    chassis.turnToHeading(180, 700, {}, false);
-    chassis.setPose(positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, EAST), positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, SOUTH), 180);
-    chassis.turnToPoint(47,-48, 1000, {});
-    chassis.moveToPoint(47, -48, 1000, {}, false);
+    while(front_disttwo.get() >= 1250){pros::delay(20);}
+    chassis.turnToHeading(180, 1000, {.minSpeed=20}, false);
+    chassis.setPose(positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, EAST), positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
+    quintic::moveToPoint(chassis,47, -50, 2000, {.async=false});
     matchload.set_value(true);
 
-    // chassis.moveToPoint(47, -47, 1000);
-    chassis.turnToPoint(65, -47, 1000, {}, false);
-    // chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
-    #pragma region SEMatchload
-    chassis.moveToPoint(65, -47, 2200, {.forwards=true, .maxSpeed=55, .minSpeed=55});
-    pros::delay(2200);
-
-    left_mg.move(-50);
-    right_mg.move(-50);
-    pros::delay(200);
-    // chassis.turnToHeading(90, 1000, {}, false);
-    // chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
-
-    chassis.turnToPoint(25, -46, 1000, {.forwards=false});
-    lower.move(0);
-    middle.move(0);
-    
     #pragma region SELongGoalScore
     pros::Task align_score4{[=]{
         while(back_dist.get() > 100) { pros::delay(50);}
@@ -255,26 +247,16 @@ void skills_experimental(){
         middle.move(127);
         upper.move(127);
     }}; 
-
-    // chassis.moveToPoint(42, -48, 2000, {.forwards=false}, true);
-    // chassis.turnToHeading(90, 500, {}, false);
-    // chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     
-    chassis.moveToPoint(25, -46, 2000, {.forwards=false, .maxSpeed=60});
-    matchload.set_value(false);
-    // pros::delay(700);
-    // lower.move(127);
-    // middle.move(127);
-    // upper.move(127);
+    chassis.turnToHeading(90, 1500, {.minSpeed=20}, false);
+    chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
+    
+    quintic::moveToPoint(chassis,24, -49, 2000, {.forwards=false, .async=false});
+    matchload.set_value(true);
     pros::delay(3500);
-
-    // chassis.moveToPoint(48, -48, 1000, {.maxSpeed=45, .minSpeed=45, .earlyExitRange=5});
-
-
-    // chassis.turnToHeading(90, 1000, {}, false);
-
-
-    // chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH),chassis.getPose().theta);
+    left_mg.move(50);
+    right_mg.move(50);
+    pros::delay(200);
     lower.move(127);
     middle.move(127);
     upper.move(0);
@@ -287,40 +269,55 @@ void skills_experimental(){
         upper.move(0);
     });
 
-    // #pragma region SELongGoalScore
+    #pragma region SEMatchload
+    chassis.turnToHeading(90, 1000, {.minSpeed=15}, false);
+    chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
 
-    // pros::Task align_score67{[=]{
-    //     while(back_dist.get() > 100) { pros::delay(50);}
-    //     lower.move(127);
-    //     middle.move(127);
-    //     upper.move(127);
-    // }}; 
+    quintic::moveToPoint(chassis,60, -47, 2000, {.forwards=true, .async=false});
+    pros::delay(2200);
 
-    // chassis.turnToPoint(25, -48, 500, {.forwards=false});
-    // chassis.moveToPoint(25, -48, 1500, {.forwards=false, .maxSpeed=60});
-    // pros::delay(1500);
-
-    #pragma region SWMatchload
-    // // chassis.moveToPoint(56, -48, 1000, {.forwards=false, .minSpeed=50, .earlyExitRange=5});
-    // left_mg.move(-50);
-    // right_mg.move(-50);
-    // pros::delay(300);
-    matchload.set_value(false);
-
-    // chassis.turnToHeading(190, 1000, {.minSpeed=50, .earlyExitRange=5});
-
-    chassis.swingToHeading(190, lemlib::DriveSide::RIGHT, 700, {.direction=lemlib::AngularDirection::CW_CLOCKWISE});
-    chassis.swingToHeading(90, lemlib::DriveSide::LEFT, 1200, {.direction=lemlib::AngularDirection::CCW_COUNTERCLOCKWISE}, false);
-    chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
-    // chassis.moveToPose(24, -68,90, 1000, {.forwards=false, .horizontalDrift=15, .maxSpeed=127, .minSpeed=50});
-    matchload.set_value(false);
-    lower.move(-127);
-    middle.move(-127);
-    upper.move(-127);
-
+    left_mg.move(-50);
+    right_mg.move(-50);
+    pros::delay(200);
+    chassis.turnToHeading(90, 1000, {.minSpeed=15}, false);
+    chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
+    lower.move(0);
+    middle.move(0);
     
+    #pragma region SWMatchload
+    matchload.set_value(false);
+    // lower.move(-127);
+    // middle.move(-127);
+    // upper.move(-127);
 
-    chassis.moveToPoint(-23, -57, 2700, {.forwards=false, .minSpeed=10});
+    chassis.turnToPoint(30, -60, 1000, {.minSpeed=15}, false);
+    timeout = 0;
+    redDetected = false;
+    while (timeout <= 400 && redDetected == false) {
+        if(fabs(roller_optical.get_hue() - 9.0) <= 2.0 && roller_optical.get_proximity() > 170){
+            redDetected = true;
+            upper.move(0);
+            master.print(0, 0, "Red Detected!");
+        }
+
+        if(timeout <= 80) {
+            lower.move(127);
+            middle.move(127);
+            upper.move(36);
+        } else if (timeout > 80) {
+            lower.move(127);
+            middle.move(127);
+            upper.move(27);
+        }
+
+        timeout++;
+        pros::delay(10);
+    }
+
+    quintic::moveToPoint(chassis, 30, -60, 2000, {.async=false});
+
+    quintic::moveToPoint(chassis, -30, -60, 2700, {.forwards=true, .async=false});
+    return;
     // chassis.turnToHeading(90, 500, {}, false);
     // chassis.setPose(positionFromRaycast(back_dist.get()*MM_TO_IN, BACK_DIST_OFFSET, WEST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
 

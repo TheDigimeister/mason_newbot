@@ -18,8 +18,10 @@ public:
      * 
      * @param distance Total distance to travel
      * @param duration Total time for the movement (milliseconds)
+     * @param initialVelocity Starting velocity (default 0)
+     * @param finalVelocity Ending velocity (default 0, use non-zero for motion chaining)
      */
-    QuinticProfile(float distance, float duration);
+    QuinticProfile(float distance, float duration, float initialVelocity = 0.0f, float finalVelocity = 0.0f);
     
     /**
      * @brief Get position at a specific time
@@ -62,11 +64,13 @@ public:
 private:
     float distance; // Total distance
     float duration; // Total duration in milliseconds
+    float v0; // Initial velocity
+    float vf; // Final velocity
     
     // Quintic polynomial coefficients for normalized time [0, 1]
-    // s(τ) = a3*τ³ + a4*τ⁴ + a5*τ⁵
+    // s(τ) = a0 + a1*τ + a2*τ² + a3*τ³ + a4*τ⁴ + a5*τ⁵
     // where τ = t/T (normalized time)
-    float a3, a4, a5;
+    float a0, a1, a2, a3, a4, a5;
 };
 
 /**
@@ -84,8 +88,11 @@ public:
      * @param endX Target X position
      * @param endY Target Y position
      * @param duration Total time for the movement (milliseconds)
+     * @param initialVelocity Starting velocity (default 0)
+     * @param finalVelocity Ending velocity (default 0, use non-zero for motion chaining)
      */
-    QuinticTrajectory2D(float startX, float startY, float endX, float endY, float duration);
+    QuinticTrajectory2D(float startX, float startY, float endX, float endY, float duration, 
+                       float initialVelocity = 0.0f, float finalVelocity = 0.0f);
     
     /**
      * @brief Get X position at a specific time

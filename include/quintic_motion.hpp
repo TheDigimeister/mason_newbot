@@ -26,6 +26,8 @@ struct QuinticMoveToPointParams {
     float settleRange = 1.0f;
     /** settling timeout in milliseconds */
     int settleTimeout = 250;
+    /** minimum exit velocity in inches/sec for motion chaining. 0.0f = come to complete stop (default) */
+    float minExitVelocity = 0.0f;
 };
 
 /**
@@ -52,6 +54,8 @@ struct QuinticMoveToPoseParams {
     int settleTimeout = 250;
     /** lead factor for turn smoothing during motion (0.0 to 1.0) */
     float lead = 0.6f;
+    /** minimum exit velocity in inches/sec for motion chaining. 0.0f = come to complete stop (default) */
+    float minExitVelocity = 0.0f;
 };
 
 /**
@@ -82,6 +86,10 @@ struct QuinticMoveToPoseParams {
  *     .lateralKP = 8.0f,
  *     .angularKP = 4.0f
  * });
+ * 
+ * // Motion chaining: maintain exit velocity for smooth transitions
+ * quintic::moveToPoint(chassis, 20, 20, 2000, {.minExitVelocity = 12.0f, .async = false});
+ * quintic::moveToPoint(chassis, 40, 20, 2000, {});  // Smoothly continues from previous motion
  * @endcode
  */
 void moveToPoint(lemlib::Chassis& chassis, float x, float y, int timeout, 
@@ -115,6 +123,10 @@ void moveToPoint(lemlib::Chassis& chassis, float x, float y, int timeout,
  * quintic::moveToPose(chassis, 10, 10, 45, 2000, {
  *     .lead = 0.8f  // Higher values = more aggressive turning
  * });
+ * 
+ * // Motion chaining: maintain exit velocity for smooth path following
+ * quintic::moveToPose(chassis, 20, 20, 90, 2000, {.minExitVelocity = 15.0f, .async = false});
+ * quintic::moveToPose(chassis, 40, 40, 180, 2000, {});  // Continues smoothly from previous
  * @endcode
  */
 void moveToPose(lemlib::Chassis& chassis, float x, float y, float theta, int timeout,

@@ -124,15 +124,19 @@ static void moveToPointTask(void* param) {
     // Conversion: VEX_heading = 90° - standard_angle
     float targetHeading = 90.0f - (std::atan2(dy, dx) * 180.0f / M_PI);
     targetHeading = normalizeAngle(targetHeading);
+    
+    // Adjust for backwards motion
+    float exitVelocity = p->params.minExitVelocity;
     if (!p->params.forwards) {
         targetHeading = normalizeAngle(targetHeading + 180.0f);
         distance = -distance; // Negative for backwards motion
+        exitVelocity = -exitVelocity; // Negative velocity for backwards motion
     }
     
     // Create quintic trajectory
-    // Use 80% of timeout for motion, 20% for settling
-    float motionTime = p->timeout * 0.8f;
-    QuinticTrajectory2D trajectory(startX, startY, p->x, p->y, motionTime);
+    // Use 80% of timeout for motion, 20% for settling (unless chaining with exit velocity)
+    float motionTime = (p->params.minExitVelocity > 0) ? p->timeout * 0.95f : p->timeout * 0.8f;
+    QuinticTrajectory2D trajectory(startX, startY, p->x, p->y, motionTime, 0.0f, exitVelocity);
     
     // Control loop variables
     uint32_t startTime = pros::millis();
@@ -188,7 +192,8 @@ static void moveToPointTask(void* param) {
         float angularError = angleError(currentHeading, targetHeading);
         
         // Check if we're in settling range (use distance to final target)
-        if (finalError < p->params.settleRange && std::abs(angularError) < 5.0f) {
+        // Skip settling if using exit velocity for motion chaining
+        if (p->params.minExitVelocity <= 0 && finalError < p->params.settleRange && std::abs(angularError) < 5.0f) {
             if (!settling) {
                 settling = true;
                 settleStartTime = currentTime;
@@ -200,7 +205,7 @@ static void moveToPointTask(void* param) {
         }
         
         // Feedforward disabled - using PID only
-        float feedforward = 0;
+        float feedforward = 10 * signedLateralError/fabs(signedLateralError);
         // if (t < motionTime) {
         //     // Get desired velocity from trajectory
         //     float vx = trajectory.getVx(t);
@@ -238,8 +243,10 @@ static void moveToPointTask(void* param) {
         pros::delay(loopDelay);
     }
     
-    // Stop motors
-    chassis.tank(0, 0, true);
+    // Stop motors only if not chaining (exit velocity is 0)
+    if (p->params.minExitVelocity <= 0) {
+        chassis.tank(0, 0, true);
+    }
     
     // Clean up if async
     if (p->params.async) delete p;
@@ -273,11 +280,11 @@ static void moveToPoseTask(void* param) {
     }
     
     // Create quintic trajectory for translation
-    // Use 80% of timeout for motion, 20% for settling
-    float motionTime = p->timeout * 0.8f;
-    QuinticTrajectory2D trajectory(startX, startY, p->x, p->y, motionTime);
+    // Use 80% of timeout for motion, 20% for settling (unless chaining with exit velocity)
+    float motionTime = (p->params.minExitVelocity > 0) ? p->timeout * 0.95f : p->timeout * 0.8f;
+    QuinticTrajectory2D trajectory(startX, startY, p->x, p->y, motionTime, 0.0f, p->params.minExitVelocity);
     
-    // Create quintic profile for rotation
+    // Create quintic profile for rotation (always start and end at 0 angular velocity)
     QuinticProfile rotationProfile(angularDistance, motionTime);
     
     // Calculate path direction
@@ -287,9 +294,13 @@ static void moveToPoseTask(void* param) {
     // Conversion: VEX_heading = 90° - standard_angle
     float pathAngle = 90.0f - (std::atan2(dy, dx) * 180.0f / M_PI);
     pathAngle = normalizeAngle(pathAngle);
+    
+    // Adjust for backwards motion
+    float exitVelocity = p->params.minExitVelocity;
     if (!p->params.forwards) {
         distance = -distance;
         pathAngle = normalizeAngle(pathAngle + 180.0f);
+        exitVelocity = -exitVelocity; // Negative velocity for backwards motion
     }
     
     // Control loop variables
@@ -360,7 +371,8 @@ static void moveToPoseTask(void* param) {
         float angularError = angleError(currentHeading, desiredHeading);
         
         // Check if we're in settling range (use distance to final target and final heading)
-        if (finalError < p->params.settleRange && std::abs(angleError(currentHeading, p->theta)) < p->params.settleAngle) {
+        // Skip settling if using exit velocity for motion chaining
+        if (p->params.minExitVelocity <= 0 && finalError < p->params.settleRange && std::abs(angleError(currentHeading, p->theta)) < p->params.settleAngle) {
             if (!settling) {
                 settling = true;
                 settleStartTime = currentTime;
@@ -412,8 +424,10 @@ static void moveToPoseTask(void* param) {
         pros::delay(loopDelay);
     }
     
-    // Stop motors
-    chassis.tank(0, 0, true);
+    // Stop motors only if not chaining (exit velocity is 0)
+    if (p->params.minExitVelocity <= 0) {
+        chassis.tank(0, 0, true);
+    }
     
     // Clean up if async
     if (p->params.async) delete p;
