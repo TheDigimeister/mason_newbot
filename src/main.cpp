@@ -15,7 +15,8 @@ bool odom_pressed = false;
 bool matchload_pressed = false;
 bool intake_up_pressed = false;
 bool parking_pressed = false;
-bool intake_speed_pressed = false;
+bool mid_intake_speed_pressed = false;
+bool low_outtake_speed_pressed = false;
 bool mid_pressed = false;
 
 bool descore_state = false;
@@ -24,7 +25,8 @@ bool odom_state = false;
 bool matchload_state = false;
 bool intake_up_state = false;
 bool parking_state = false;
-bool intake_speed_state = false;
+bool mid_intake_speed_state = false;
+bool low_outtake_speed_state = true;
 bool mid_state = false;
 
 bool prev_descore_state = false;
@@ -33,10 +35,12 @@ bool prev_odom_state = false;
 bool prev_matchload_state = false;
 bool prev_intake_up_state = false;
 bool prev_parking_state = false;
-bool prev_intake_speed_state = false;
+bool prev_mid_intake_speed_state = false;
+bool prev_low_outtake_speed_state = false;
 bool prev_mid_state = false;
 
-int intake_speed = 127;
+int mid_intake_speed = 127;
+int low_outtake_speed = 60;
 
 int selected_auton = 8;
 bool auton_selected = false;
@@ -376,7 +380,8 @@ void opcontrol() {
 		odom_pressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
 		intake_up_pressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_B);
 		mid_pressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_A);
-		intake_speed_pressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+		mid_intake_speed_pressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+		low_outtake_speed_pressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
 
 		// Arcade control scheme
 		int dir = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
@@ -400,15 +405,15 @@ void opcontrol() {
 			}
 		}
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			lower.move(-intake_speed);
-			middle.move(-intake_speed);
-			upper.move(-intake_speed);
+			lower.move(-low_outtake_speed);
+			middle.move(-low_outtake_speed);
+			upper.move(-low_outtake_speed);
 		}
 
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-			lower.move(intake_speed);
-			middle.move(intake_speed);
-			upper.move(intake_speed);
+			lower.move(127);
+			middle.move(127);
+			upper.move(mid_intake_speed);
 		}
 
 		else {
@@ -490,10 +495,16 @@ void opcontrol() {
 			parking.set_value(parking_state);
 		}
 
-		if (intake_speed_pressed && !prev_intake_speed_state) {
-			intake_speed_state = !intake_speed_state;
-			if(intake_speed_state) {intake_speed = 60;}
-			else {intake_speed = 127;}
+		if (mid_intake_speed_pressed && !prev_mid_intake_speed_state) {
+			mid_intake_speed_state = !mid_intake_speed_state;
+			if(mid_intake_speed_state) {mid_intake_speed = 64;}
+			else {mid_intake_speed = 127;}
+		}
+
+		if (low_outtake_speed_pressed && !prev_low_outtake_speed_state) {
+			low_outtake_speed_state = !low_outtake_speed_state;
+			if(low_outtake_speed_state) {low_outtake_speed = 64;}
+			else {low_outtake_speed = 127;}
 		}
 
 		prev_odom_state = odom_pressed;
@@ -502,7 +513,8 @@ void opcontrol() {
 		prev_descore_state = descore_pressed;
 		prev_intake_up_state = intake_up_pressed;
 		prev_parking_state = parking_pressed; 
-		prev_intake_speed_state = intake_speed_pressed;
+		prev_mid_intake_speed_state = mid_intake_speed_pressed;
+		prev_low_outtake_speed_state = low_outtake_speed_pressed;
 		
 		pros::delay(20);                               // Run for 20 ms then update
 	}
