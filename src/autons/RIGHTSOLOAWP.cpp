@@ -17,12 +17,11 @@ void rightSoloAWP() {
         upper.move(0);
     });
 
-    chassis.moveToPoint(-50, -47, 1200, {.maxSpeed=127});
-    chassis.turnToHeading(270, 700, {}, false);
+    chassis.moveToPoint(-50, -50, 1200, {.maxSpeed=127});
+    chassis.turnToHeading(270, 700, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     
-    chassis.moveToPoint(-62, -48, 800, {.forwards=true, .maxSpeed=45, .minSpeed = 45});
-    pros::delay(800);
+    quintic::moveToPoint(chassis, -62, -48, 1000, {.forwards=true, .async=false});
     
     // move to goals
     upper.move(0);
@@ -33,16 +32,17 @@ void rightSoloAWP() {
         upper.move(127);
     }}; 
 
-    chassis.moveToPoint(-24, -49, 1800, {.forwards=false, .maxSpeed=100});
-    matchload.set_value(false);
 
-    pros::delay(1800);
+
+    quintic::moveToPoint(chassis, -24, -50, 1900, {.forwards=false, .async=false});
+    matchload.set_value(false);
+    pros::delay(400);
     upper.move(0);
 
-    chassis.turnToHeading(0, 1000, {}, false);
+    chassis.turnToHeading(0, 1000, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, WEST), positionFromRaycast(back_dist.get()*MM_TO_IN, BACK_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     
-    chassis.moveToPoint(-23,-24,500, {.maxSpeed=80, .minSpeed=80, .earlyExitRange=5});
+    chassis.moveToPoint(-23,-24,500, {.maxSpeed=80, .minSpeed=80});
     chassis.moveToPoint(-23,15,1000, {.maxSpeed=80});
     pros::delay(1000);
     matchload.set_value(true);
@@ -68,11 +68,11 @@ void rightSoloAWP() {
     middle.move(127);
 
     chassis.moveToPoint(-52, 40, 1000, {.maxSpeed=80});
-    chassis.turnToHeading(270, 700, {}, false);
+    chassis.turnToHeading(270, 700, {.minSpeed=20}, false);
     level.set_value(true);
     chassis.setPose(positionFromRaycast(front_dist.get() * MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(right_dist.get() * MM_TO_IN, RIGHT_DIST_OFFSET, NORTH), chassis.getPose().theta);
     chassis.moveToPoint(-62, 47.5, 1200, {.forwards=true, .maxSpeed=60, .minSpeed=45}, true);
-    pros::delay(600);
+    pros::delay(1000);
 
     // long goal score
         pros::Task align_score3{[=]{

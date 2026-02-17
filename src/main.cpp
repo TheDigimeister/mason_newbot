@@ -42,7 +42,7 @@ bool prev_mid_state = false;
 int mid_intake_speed = 127;
 int low_outtake_speed = 60;
 
-int selected_auton = 8;
+int selected_auton = 3;
 bool auton_selected = false;
 
 const float RAYCAST_RESET_ANGLE_RANGE = 6.0; // ± degrees from 0°/360° or 90°/270° 

@@ -25,17 +25,17 @@ void right7BallTraction() {
     chassis.moveToPoint(-24, -24, 2000, {.maxSpeed = 127, .minSpeed=127, .earlyExitRange=8});
     pros::delay(500);
     matchload.set_value(true);
-    chassis.turnToPoint(-50, -48,700, {.maxSpeed=127, .minSpeed=80}, false);
+    chassis.turnToPoint(-48, -44, 700, {.maxSpeed=127, .minSpeed=80}, false);
     matchload.set_value(true);
 
     // back up
-    chassis.moveToPoint(-50, -48, 1500, {.maxSpeed=127});
-    chassis.turnToHeading(270, 700, {}, false);
+    chassis.moveToPoint(-48, -44, 1500, {.maxSpeed=127, .minSpeed=50});
+    chassis.turnToHeading(270, 700, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     
-    chassis.moveToPoint(-62, -48, 400, {.forwards=true, .maxSpeed=45, .minSpeed = 45});
-    pros::delay(400);
-    chassis.turnToHeading(270, 400);
+    chassis.moveToPoint(-63, -49, 500, {.forwards=true, .maxSpeed=45, .minSpeed = 45});
+    pros::delay(500);
+    chassis.turnToHeading(270, 400, {.minSpeed=20});
     pros::delay(400);
     chassis.setPose(chassis.getPose().x, positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
 
@@ -49,15 +49,17 @@ void right7BallTraction() {
         upper.move(127);
     }}; 
 
-    chassis.moveToPoint(-24, -49, 300, {.forwards=false, .minSpeed=127});
-    chassis.moveToPoint(-24, -49, 2500, {.forwards=false, .maxSpeed=67});
+    // chassis.moveToPoint(-24, -49, 300, {.forwards=false, .minSpeed=127});
+    // chassis.moveToPoint(-24, -49, 2500, {.forwards=false, .maxSpeed=67});
+    quintic::moveToPoint(chassis, -24, -49, 1900, {.forwards=false, .async=false});
 
-    pros::delay(2500);
+
+    pros::delay(500);
 
     // descore
 
-    chassis.swingToHeading(330, lemlib::DriveSide::RIGHT, 1000);
-    chassis.turnToHeading(90, 700, {.maxSpeed=100});
+    chassis.swingToHeading(345, lemlib::DriveSide::RIGHT, 1000, {.minSpeed=20});
+    chassis.turnToHeading(90, 700, {.maxSpeed=100, .minSpeed=20});
     descore.set_value(false);
     chassis.moveToPoint(-10, -38, 1000, {});
     matchload.set_value(false);
