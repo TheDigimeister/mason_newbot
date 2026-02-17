@@ -204,20 +204,24 @@ static void moveToPointTask(void* param) {
             settling = false;
         }
         
-        // Feedforward disabled - using PID only
-        float feedforward = 10 * signedLateralError/fabs(signedLateralError);
-        // if (t < motionTime) {
-        //     // Get desired velocity from trajectory
-        //     float vx = trajectory.getVx(t);
-        //     float vy = trajectory.getVy(t);
-        //     float desiredVelocity = std::sqrt(vx * vx + vy * vy);
-        //     
-        //     // Convert to motor speed (scale velocity to motor voltage)
-        //     // Assuming max velocity corresponds to full motor power
-        //     float maxVel = distance / (motionTime / 1000.0f) * 2.0f; // Peak velocity for quintic profile
-        //     feedforward = (desiredVelocity / maxVel) * 127.0f;
-        //     if (!p->params.forwards) feedforward = -feedforward;
-        // }
+        // Calculate feedforward from trajectory velocity
+        float feedforward = 0;
+        if (t < motionTime) {
+            // Get desired velocity from trajectory
+            float vx = trajectory.getVx(t);
+            float vy = trajectory.getVy(t);
+            float desiredVelocity = std::sqrt(vx * vx + vy * vy);
+            
+            // Scale based on robot's max velocity to avoid over-powering slow movements
+            feedforward = (desiredVelocity / p->params.maxVelocity) * 127.0f;
+            
+            // Apply minimum clamp to overcome static friction
+            if (p->params.kS > 0.0f && std::abs(feedforward) > 0.1f && std::abs(feedforward) < p->params.kS) {
+                feedforward = feedforward > 0 ? p->params.kS : -p->params.kS;
+            }
+            
+            if (!p->params.forwards) feedforward = -feedforward;
+        }
         
         // PID corrections (use signed lateral error for control)
         float lateralCorrection = p->params.lateralKP * signedLateralError;
@@ -383,19 +387,24 @@ static void moveToPoseTask(void* param) {
             settling = false;
         }
         
-        // Feedforward disabled - using PID only
+        // Calculate feedforward from trajectory velocity
         float feedforward = 0;
-        // if (t < motionTime) {
-        //     // Get desired velocity from trajectory
-        //     float vx = trajectory.getVx(t);
-        //     float vy = trajectory.getVy(t);
-        //     float desiredVelocity = std::sqrt(vx * vx + vy * vy);
-        //     
-        //     // Convert to motor speed
-        //     float maxVel = std::abs(distance) / (motionTime / 1000.0f) * 2.0f;
-        //     feedforward = (desiredVelocity / maxVel) * 127.0f;
-        //     if (!p->params.forwards) feedforward = -feedforward;
-        // }
+        if (t < motionTime) {
+            // Get desired velocity from trajectory
+            float vx = trajectory.getVx(t);
+            float vy = trajectory.getVy(t);
+            float desiredVelocity = std::sqrt(vx * vx + vy * vy);
+            
+            // Scale based on robot's max velocity to avoid over-powering slow movements
+            feedforward = (desiredVelocity / p->params.maxVelocity) * 127.0f;
+            
+            // Apply minimum clamp to overcome static friction
+            if (p->params.kS > 0.0f && std::abs(feedforward) > 0.1f && std::abs(feedforward) < p->params.kS) {
+                feedforward = feedforward > 0 ? p->params.kS : -p->params.kS;
+            }
+            
+            if (!p->params.forwards) feedforward = -feedforward;
+        }
         
         // PID corrections
         // Forward error drives forward/back motion along robot's heading
