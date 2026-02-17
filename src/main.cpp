@@ -280,7 +280,7 @@ void initialize() {
 	});
 
 	pros::Task print_coordinates([=](){
-		while (true) {
+		while (false) {
 			if (true) {
 				master.print(0, 0, "X:%.2fY:%.2fT:%.2f", chassis.getPose().x, chassis.getPose().y, chassis.getPose().theta);
 				pros::delay(100);
