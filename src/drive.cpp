@@ -31,6 +31,30 @@ lemlib::OdomSensors sensors(&left_wheel, // vertical tracking wheel 1, set to nu
                             &inertial // inertial sensor
 );
 
+// // PERFECT lateral PID controller
+// lemlib::ControllerSettings lateral_controller(10.583, // proportional gain (kP)
+//                                               0.0, // integral gain (kI) // 0.5
+//                                               55.0, // derivative gain (kD)
+//                                               2, // anti windup
+//                                               1, // small error range, in inches
+//                                               300, // small error range timeout, in milliseconds
+//                                               3, // large error range, in inches
+//                                               500, // large error range timeout, in milliseconds
+//                                               50 // maximum acceleration (slew)
+// );
+
+// // PERFECT angular PID controller
+// lemlib::ControllerSettings angular_controller(1.5, // proportional gain (kP)
+//                                               0.0, // integral gain (kI) // 0.04
+//                                               20, // derivative gain (kD)
+//                                               21, // anti windup
+//                                               1, // small error range, in degrees
+//                                               300, // small error range timeout, in milliseconds
+//                                               3, // large error range, in degrees
+//                                               500, // large error range timeout, in milliseconds
+//                                               0 // maximum acceleration (slew)
+// );
+
 // PERFECT lateral PID controller
 lemlib::ControllerSettings lateral_controller(10.583, // proportional gain (kP)
                                               0.0, // integral gain (kI) // 0.5
@@ -54,6 +78,7 @@ lemlib::ControllerSettings angular_controller(1.5, // proportional gain (kP)
                                               500, // large error range timeout, in milliseconds
                                               0 // maximum acceleration (slew)
 );
+
 
 // // PERFECT angular PID controller
 // lemlib::ControllerSettings angular_controller(3.5, // proportional gain (kP)

@@ -25,5 +25,6 @@ extern void skills_experimental();
 extern void pidTune();
 extern void superMiddleGoal2NoHit();
 extern void right7BallTraction();
+extern void rightLowGoal();
 extern const int ALLIANCECOLOR;
 extern const int OPPONENTCOLOR;

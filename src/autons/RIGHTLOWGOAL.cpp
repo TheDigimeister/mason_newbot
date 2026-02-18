@@ -1,92 +1,89 @@
 #include "drive.hpp"
+#include "lemlib/chassis/chassis.hpp"
 #include "main.h"
 #include "robot.hpp"
 #include "utils.hpp"
 
 void rightLowGoal() {
     odom.set_value(false);
-    chassis.setPose(positionFromRaycast(back_dist.get() * MM_TO_IN, BACK_DIST_OFFSET, WEST), positionFromRaycast(right_dist.get() * MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH),90);
-    descore.set_value(true);
     level.set_value(true);
-    // 9-ball low goal side (37)
+    descore.set_value(true);
+    chassis.setPose(positionFromRaycast(right_dist.get() * MM_TO_IN, RIGHT_DIST_OFFSET, WEST), positionFromRaycast(front_dist.get() * MM_TO_IN, FRONT_DIST_OFFSET, SOUTH),180);
+    matchload.set_value(true);
 
     lower.move(127);
+    middle.move(127);
     pros::Task upper_roller_hold([] {
         while(roller_dist.get() > 50) {upper.move(50);}
         upper.move(0);
     });
 
-    // pick up trio
-    // chassis.moveToPose(-24, -24, 135, 1000, {.maxSpeed=127, .minSpeed=100, .earlyExitRange=12});
-    // chassis.moveToPoint(-24, -24, 750, {.maxSpeed=50, .minSpeed=50, .earlyExitRange=3});
-
-    // pick up trio
-    chassis.moveToPoint(-18, -28, 500, {.maxSpeed=127, .minSpeed = 40, .earlyExitRange = 12});
-    chassis.moveToPoint(-18, -28, 2000, {.maxSpeed = 40, .minSpeed = 40, .earlyExitRange = 5});
-
-    // pick up long goal balls
+    chassis.moveToPoint(-48, -50, 1200, {.maxSpeed=127});
+    chassis.turnToHeading(270, 800, {.minSpeed=20}, false);
+    chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     
-    chassis.moveToPoint(-6, -46, 1200, {.maxSpeed=100, .minSpeed=5, .earlyExitRange=1});
-    // chassis.moveToPoint(-6, -46, 400, {.maxSpeed=40});
-
-
-    // back up
-    chassis.moveToPoint(-24, -36, 2000, {.forwards = false, .maxSpeed = 127, .minSpeed = 100, .earlyExitRange = 5}, false);
-    // matchload.set_value(false);
-    // level.set_value(false);
-
+    chassis.moveToPoint(-62, -48, 800, {.forwards=true, .maxSpeed=45}, true);
+    pros::delay(800);
+    
     // move to goals
-    lower.move(127);
-    descore.set_value(false);
-    chassis.moveToPoint(-27, -33, 2000, {.forwards = false, .minSpeed=5, .earlyExitRange=1});
-    chassis.turnToHeading(0, 500);
-    chassis.moveToPoint(-27, -48, 500, {.forwards=false}, false);
-    left_mg.move(-127);
-    right_mg.move(0);
-    pros::Task align_score1{[=]{
-        while(back_dist.get() > 70) {pros::delay(50);}
-        upper.move(127);
-    }};
-    pros::delay(900);
-    right_mg.move(-127);
-    upper.move(127);
-    pros::delay(1200);
-
-    chassis.turnToHeading(270, 200, {}, false);
-    chassis.setPose(chassis.getPose().x, positionFromRaycast(left_dist.get() * MM_TO_IN,LEFT_DIST_OFFSET, SOUTH),chassis.getPose().theta);
     upper.move(0);
-    matchload.set_value(true);
-    chassis.moveToPoint(-61, -48, 900, {.forwards=true, .maxSpeed=127, .minSpeed = 45, .earlyExitRange=24});
-    chassis.moveToPoint(-61, -48, 800, {.forwards=true, .maxSpeed=45, .minSpeed = 45});
-    pros::delay(1000);
+    lower.move(127);
 
+    pros::Task align_score2{[=]{
+        while(back_dist.get() > 100) { pros::delay(50);}
+        upper.move(127);
+    }}; 
+
+
+
+    quintic::moveToPoint(chassis, -25, -51, 2000, {.forwards=false, .async=false, .settleRange=2});
     matchload.set_value(false);
+    upper.move(0);
 
-    chassis.moveToPoint(-24, -24, 2000, {.forwards=false, .minSpeed=127, .earlyExitRange=5});
-    chassis.turnToPoint(-10, -10, 1000, {.minSpeed=127, .earlyExitRange=1});
+    chassis.swingToHeading(0, lemlib::DriveSide::RIGHT, 1000, {.minSpeed=20}, false);
+    chassis.setPose(positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, WEST), positionFromRaycast(back_dist.get()*MM_TO_IN, BACK_DIST_OFFSET, SOUTH), chassis.getPose().theta);
+    middle.move(-50);
+    chassis.moveToPoint(-24,-24,500, {.maxSpeed=80, .minSpeed=50}, false);
+    quintic::moveToPoint(chassis, -16, -12, 2000, {.async=false});
     intake_up.set_value(true);
-    chassis.moveToPoint(-10, -10, 2000, {}, true);
-    lower.move(-127);
-    upper.move(-127);
-    pros::delay(2000);
+    chassis.turnToHeading(45, 200, {.minSpeed=20});
+    lower.move(-57);
+    middle.move(-57);
+    upper.move(-57);
+    pros::delay(1200);
+    lower.move(127);
+    middle.move(127);
+    upper.move(0);
+    level.set_value(true);
+
+    chassis.moveToPose(-36,-30, 90, 3000, {.forwards=false, .minSpeed=50}, false);
     intake_up.set_value(false);
-
-    // descore
-    chassis.moveToPoint(-39, -37.5, 1500, {.forwards=false, .minSpeed=50});
     descore.set_value(false);
-    chassis.turnToHeading(90, 1000, {}, false);
+    chassis.moveToPoint(-10, -32, 1200);
+    // chassis.turnToPoint(-24, 23, 2000, {.minSpeed=20});
+    // chassis.moveToPoint(-24,23,1200, {.maxSpeed=80});
 
-    // left_mg.move(-80);
-    // right_mg.move(-80);
-    // pros::delay(700);
+    // chassis.moveToPoint(-52, 40, 1000, {.maxSpeed=80});
+    // pros::delay(200);
+    // level.set_value(true);
+    // chassis.turnToHeading(270, 700, {.minSpeed=20}, false);
+    // level.set_value(true);
+    // chassis.setPose(positionFromRaycast(front_dist.get() * MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(right_dist.get() * MM_TO_IN, RIGHT_DIST_OFFSET, NORTH), chassis.getPose().theta);
+    // chassis.moveToPoint(-62, 47.5, 1200, {.forwards=true, .maxSpeed=60, .minSpeed=45}, true);
+    // pros::delay(1000);
 
-    chassis.setPose(positionFromRaycast(back_dist.get()*MM_TO_IN, BACK_DIST_OFFSET, WEST),positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
-
-    chassis.moveToPose(-12, -37.5, 90, 1000, {.forwards=true, .minSpeed=50});
-    chassis.turnToHeading(60, 2000);
-
-
-    odom.set_value(false);
-    matchload.set_value(false);
+    // // long goal score
+    //     pros::Task align_score3{[=]{
+    //     while(back_dist.get() > 100) { pros::delay(50);}
+    //     upper.move(127);
+    //     lower.move(127);
+    // }};
+    
+    // // chassis.turnToPoint(-25, 48, 500, {.forwards=false, .maxSpeed=80}, true);
+    // chassis.moveToPoint(-25, 49, 1300, {.forwards=false, .maxSpeed=80}, false);
+    // matchload.set_value(false);
+    // lower.move(127);
+    // middle.move(127);
+    // upper.move(127);
 
 }

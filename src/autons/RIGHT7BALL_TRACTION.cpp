@@ -33,7 +33,7 @@ void right7BallTraction() {
     chassis.turnToHeading(270, 700, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     
-    chassis.moveToPoint(-63, -49, 500, {.forwards=true, .maxSpeed=45, .minSpeed = 45});
+    chassis.moveToPoint(-65, -49, 500, {.forwards=true, .maxSpeed=45, .minSpeed = 45});
     pros::delay(500);
     chassis.turnToHeading(270, 400, {.minSpeed=20});
     pros::delay(400);

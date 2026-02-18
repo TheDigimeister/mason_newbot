@@ -42,7 +42,7 @@ bool prev_mid_state = false;
 int mid_intake_speed = 127;
 int low_outtake_speed = 60;
 
-int selected_auton = 3;
+int selected_auton = 8;
 bool auton_selected = false;
 
 const float RAYCAST_RESET_ANGLE_RANGE = 6.0; // ± degrees from 0°/360° or 90°/270° 
@@ -55,9 +55,9 @@ const int OPPONENTCOLOR = BLUE;
 const char* auton_names[] = {
     "None",
 	"SOLO AWP",
-	"Super Low Goal",
+	"Right Low Goal",
 	"Super Middle Goal",
-	"Skills",
+	"Old Skills",
 	"PID Tune",
 	"Super Middle Goal 2 - No Hit",
 	"Right 7 Ball TRACTION",
@@ -327,7 +327,7 @@ void autonomous() {
 			rightSoloAWP();
 			break;
 		case 2:
-			superLowGoal();
+			rightLowGoal();
 			break;
 		case 3:
 			superMiddleGoal();

@@ -212,6 +212,9 @@ static void moveToPointTask(void* param) {
             float vy = trajectory.getVy(t);
             float desiredVelocity = std::sqrt(vx * vx + vy * vy);
             
+            // Convert from inches/ms to inches/sec
+            desiredVelocity *= 1000.0f;
+            
             // Scale based on robot's max velocity to avoid over-powering slow movements
             feedforward = (desiredVelocity / p->params.maxVelocity) * 127.0f;
             
@@ -394,6 +397,8 @@ static void moveToPoseTask(void* param) {
             float vx = trajectory.getVx(t);
             float vy = trajectory.getVy(t);
             float desiredVelocity = std::sqrt(vx * vx + vy * vy);
+
+            desiredVelocity *= 1000;
             
             // Scale based on robot's max velocity to avoid over-powering slow movements
             feedforward = (desiredVelocity / p->params.maxVelocity) * 127.0f;

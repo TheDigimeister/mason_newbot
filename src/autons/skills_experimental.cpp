@@ -43,7 +43,7 @@ void skills_experimental(){
     lower.move(127);
 
     // quintic::moveToPoint(chassis,-24, 24, 1700, {.async=true});
-    quintic::moveToPose(chassis, -18, 24, 135, 2000, {.async=false});
+    quintic::moveToPose(chassis, -18, 24, 135, 3000, {.async=false});
     // pros::delay(800);
     // matchload.set_value(true);
     // middle.move(0);
@@ -104,7 +104,7 @@ void skills_experimental(){
         }
         upper.move(0);
     });
-    quintic::moveToPose(chassis,-60, 60, 270, 3000, {.async=false});
+    quintic::moveToPose(chassis,-60, 48, 270, 3000, {.async=false});
     // chassis.moveToPose(-51, 47, 270, 3000, {.lead=0.3, .minSpeed=20}, false);
     level.set_value(true);
     left_mg.move(50);

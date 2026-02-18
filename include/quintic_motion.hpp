@@ -29,7 +29,7 @@ struct QuinticMoveToPointParams {
     /** minimum exit velocity in inches/sec for motion chaining. 0.0f = come to complete stop (default) */
     float minExitVelocity = 0.0f;
     /** maximum robot velocity in inches/sec (used for feedforward scaling). 60.0 = default */
-    float maxVelocity = 60.0f;
+    float maxVelocity = 66.0f;
     /** static friction feedforward constant (motor voltage). Minimum feedforward clamp to overcome friction. 0.0 = disabled (default) */
     float kS = 10.0f;
 };
