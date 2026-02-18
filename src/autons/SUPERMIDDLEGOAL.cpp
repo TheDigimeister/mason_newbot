@@ -24,9 +24,9 @@ void superMiddleGoal(){
     // // pick up long goal balls
     
     // middle goal score
-    chassis.turnToPoint(-12, 9, 1000, {.forwards=false, .minSpeed=20}, false);
+    chassis.turnToPoint(-11.5, 10.5, 1000, {.forwards=false, .minSpeed=20}, false);
     level.set_value(false);
-    quintic::moveToPoint(chassis, -12, 9, 1200, {.forwards=false, .async=false});
+    quintic::moveToPoint(chassis, -11.5, 10.5, 1200, {.forwards=false, .async=false});
     lower.move(56);
     middle.move(56);
     upper.move(56);
@@ -56,7 +56,7 @@ void superMiddleGoal(){
     
     // chassis.moveToPoint(-25, 48, 300, {.forwards=false, .maxSpeed=127}, true);
     // chassis.moveToPoint(-25, 48, 1300, {.forwards=false, .maxSpeed=80}, true);
-    quintic::moveToPoint(chassis,-25,49,1700, {.forwards=false, .async=false});
+    quintic::moveToPoint(chassis,-26,49,2100, {.forwards=false, .async=false});
     matchload.set_value(false);
 
 
@@ -69,7 +69,7 @@ void superMiddleGoal(){
     right_mg.move(50);
     pros::delay(250);
     chassis.turnToHeading(280, 900, {.minSpeed=20});
-    chassis.moveToPoint(-10, 36, 1000, {.forwards=false});
+    chassis.moveToPoint(-13, 36, 1000, {.forwards=false});
 
     odom.set_value(false);
     matchload.set_value(false);
