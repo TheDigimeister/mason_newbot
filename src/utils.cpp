@@ -12,11 +12,11 @@ float positionFromRaycast(float sensorReading, float sensorOffset, WALL wall) {
     switch (wall) {
         case NORTH:
         case EAST:
-            return 72.0 - (sensorReading + sensorOffset);
+            return 71.0 - (sensorReading + sensorOffset);
             break;
         case SOUTH:
         case WEST:
-            return (sensorReading + sensorOffset) - 72.0;
+            return (sensorReading + sensorOffset) - 71.0;
             break;
         default:
             std::printf("Invalid Wall\n");

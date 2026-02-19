@@ -37,7 +37,7 @@ void superMiddleGoal(){
 
     
     // matchload
-    quintic::moveToPoint(chassis, -47.5, 43, 1800, {.forwards=true, .async=false});
+    quintic::moveToPoint(chassis, -47.5, 40, 1800, {.forwards=true, .async=false});
     
     matchload.set_value(true);
     chassis.turnToHeading(270, 800, {.maxSpeed=127, .minSpeed=20}, false);
@@ -56,7 +56,7 @@ void superMiddleGoal(){
     
     // chassis.moveToPoint(-25, 48, 300, {.forwards=false, .maxSpeed=127}, true);
     // chassis.moveToPoint(-25, 48, 1300, {.forwards=false, .maxSpeed=80}, true);
-    quintic::moveToPoint(chassis,-26,49,2100, {.forwards=false, .async=false});
+    quintic::moveToPoint(chassis,-26,48,2100, {.forwards=false, .async=false});
     matchload.set_value(false);
 
 

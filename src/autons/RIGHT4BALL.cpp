@@ -4,15 +4,14 @@
 #include "robot.hpp"
 #include "utils.hpp"
 
-void right7BallTraction() {
+void right4Ball() {
     odom.set_value(false);
     level.set_value(true);
     descore.set_value(true);
     chassis.setPose(positionFromRaycast(back_dist.get() * MM_TO_IN, BACK_DIST_OFFSET, WEST), positionFromRaycast(right_dist.get() * MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH),90);
 
 
-    // 7-ball low goal side (31)
-
+    // 4-ball low goal side (31)
     lower.move(127);
     middle.move(127);
     pros::Task upper_roller_hold([] {
@@ -21,24 +20,17 @@ void right7BallTraction() {
     });
 
     // pick up trio
-
     chassis.moveToPoint(-24, -24, 2000, {.maxSpeed = 127, .minSpeed=127, .earlyExitRange=8});
     pros::delay(500);
     matchload.set_value(true);
-    chassis.turnToPoint(-48, -44, 700, {.maxSpeed=127, .minSpeed=80}, false);
+    chassis.turnToPoint(-48, -44, 700, {.maxSpeed=127, .minSpeed=127, .earlyExitRange = 3}, false);
     matchload.set_value(true);
 
     // back up
-    chassis.moveToPoint(-48, -44, 1500, {.maxSpeed=127, .minSpeed=50});
-    chassis.turnToHeading(270, 700, {.minSpeed=20}, false);
-    chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
+    chassis.moveToPoint(-38, -46, 1500, {.maxSpeed=127, .minSpeed=50}, false);
+    // chassis.turnToHeading(270, 700, {.minSpeed=20}, false);
+    // chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     
-    chassis.moveToPoint(-65, -48, 500, {.forwards=true, .maxSpeed=45, .minSpeed = 45});
-    pros::delay(500);
-    chassis.turnToHeading(270, 400, {.minSpeed=20});
-    pros::delay(400);
-    chassis.setPose(chassis.getPose().x, positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
-
     // move to goals
     upper.move(0);
     middle.move(127);
@@ -51,8 +43,7 @@ void right7BallTraction() {
 
     // chassis.moveToPoint(-24, -49, 300, {.forwards=false, .minSpeed=127});
     // chassis.moveToPoint(-24, -49, 2500, {.forwards=false, .maxSpeed=67});
-    quintic::moveToPoint(chassis, -24, -48, 1900, {.forwards=false, .async=false});
-
+    quintic::moveToPoint(chassis, -26, -49, 1500, {.forwards=false, .async=false});
 
     pros::delay(500);
 
@@ -74,6 +65,7 @@ void right7BallTraction() {
     lower.move(0);
     middle.move(0);
     upper.move(0);
+
 
 
 

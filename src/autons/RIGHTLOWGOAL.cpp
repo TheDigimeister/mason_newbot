@@ -44,7 +44,7 @@ void rightLowGoal() {
     chassis.setPose(positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, WEST), positionFromRaycast(back_dist.get()*MM_TO_IN, BACK_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     middle.move(-50);
     chassis.moveToPoint(-24,-24,500, {.maxSpeed=80, .minSpeed=50}, false);
-    quintic::moveToPoint(chassis, -16, -12, 2000, {.async=false});
+    quintic::moveToPoint(chassis, -16, -11, 2000, {.async=false});
     intake_up.set_value(true);
     chassis.turnToHeading(45, 200, {.minSpeed=20});
     lower.move(-57);
@@ -56,10 +56,10 @@ void rightLowGoal() {
     upper.move(0);
     level.set_value(true);
 
-    chassis.moveToPose(-36,-30, 90, 3000, {.forwards=false, .minSpeed=50}, false);
+    chassis.moveToPose(-36,-32, 90, 3000, {.forwards=false, .minSpeed=50}, false);
     intake_up.set_value(false);
     descore.set_value(false);
-    chassis.moveToPoint(-10, -32, 1200);
+    chassis.moveToPoint(-10, -32, 1700, {.maxSpeed=60});
     // chassis.turnToPoint(-24, 23, 2000, {.minSpeed=20});
     // chassis.moveToPoint(-24,23,1200, {.maxSpeed=80});
 

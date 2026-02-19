@@ -42,7 +42,7 @@ bool prev_mid_state = false;
 int mid_intake_speed = 127;
 int low_outtake_speed = 60;
 
-int selected_auton = 3;
+int selected_auton = 8;
 bool auton_selected = false;
 
 const float RAYCAST_RESET_ANGLE_RANGE = 6.0; // ± degrees from 0°/360° or 90°/270° 
@@ -61,7 +61,8 @@ const char* auton_names[] = {
 	"PID Tune",
 	"Super Middle Goal 2 - No Hit",
 	"Right 7 Ball TRACTION",
-	"Skills Experimental"
+	"Skills Experimental",
+	"Right 4 Ball"
 };
 
 /**
@@ -77,14 +78,14 @@ void on_center_button() {
 void on_left_button() {
     if (!auton_selected) {
         selected_auton--;
-        if (selected_auton < 1) selected_auton = 8; // Wrap to last auton
+        if (selected_auton < 1) selected_auton = 9; // Wrap to last auton
     }
 }
 
 void on_right_button() {
     if (!auton_selected) {
         selected_auton++;
-        if (selected_auton > 8) selected_auton = 1; // Wrap to first auton
+        if (selected_auton > 9) selected_auton = 1; // Wrap to first auton
     }
 }
 
@@ -346,6 +347,9 @@ void autonomous() {
 			break;
 		case 8:
 			skills_experimental();
+			break;
+		case 9:
+			right4Ball();
 			break;
 	}
 
