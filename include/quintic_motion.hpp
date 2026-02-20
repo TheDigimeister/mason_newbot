@@ -23,13 +23,13 @@ struct QuinticMoveToPointParams {
     float angularKP = -1.0f;
     float angularKD = -1.0f;
     /** settling tolerance in inches */
-    float settleRange = 1.0f;
+    float settleRange = 1.5f;
     /** settling timeout in milliseconds */
-    int settleTimeout = 250;
+    int settleTimeout = 50;
     /** minimum exit velocity in inches/sec for motion chaining. 0.0f = come to complete stop (default) */
     float minExitVelocity = 0.0f;
     /** maximum robot velocity in inches/sec (used for feedforward scaling). 60.0 = default */
-    float maxVelocity = 66.0f;
+    float maxVelocity = 66.8f;
     /** static friction feedforward constant (motor voltage). Minimum feedforward clamp to overcome friction. 0.0 = disabled (default) */
     float kS = 10.0f;
 };
@@ -51,17 +51,17 @@ struct QuinticMoveToPoseParams {
     float angularKP = -1.0f;
     float angularKD = -1.0f;
     /** settling tolerance in inches */
-    float settleRange = 1.0f;
+    float settleRange = 1.5f;
     /** settling tolerance in degrees */
     float settleAngle = 2.0f;
     /** settling timeout in milliseconds */
-    int settleTimeout = 250;
+    int settleTimeout = 50;
     /** lead factor for turn smoothing during motion (0.0 to 1.0) */
     float lead = 0.6f;
     /** minimum exit velocity in inches/sec for motion chaining. 0.0f = come to complete stop (default) */
     float minExitVelocity = 0.0f;
     /** maximum robot velocity in inches/sec (used for feedforward scaling). 60.0 = default */
-    float maxVelocity = 60.0f;
+    float maxVelocity = 66.5f;
     /** static friction feedforward constant (motor voltage). Minimum feedforward clamp to overcome friction. 0.0 = disabled (default) */
     float kS = 10.0f;
 };
