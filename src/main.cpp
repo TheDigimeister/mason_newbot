@@ -323,6 +323,7 @@ void competition_initialize() {}
 void autonomous() {
 
 	chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+	upper.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
 	switch (selected_auton) {
 		case 1:
