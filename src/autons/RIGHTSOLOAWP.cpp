@@ -47,8 +47,8 @@ void rightSoloAWP() {
     chassis.moveToPoint(-24,22,1200, {.maxSpeed=80});
     pros::delay(1000);
     matchload.set_value(true);
-    chassis.turnToPoint(-14, 7, 1000, {.forwards=false, .minSpeed=20}, false);
-    quintic::moveToPoint(chassis,-14,7,1000,{.forwards=false, .async=false});
+    chassis.turnToPoint(-14, 14, 1000, {.forwards=false, .minSpeed=20}, false);
+    quintic::moveToPoint(chassis,-14,14,1000,{.forwards=false, .async=false});
     level.set_value(false);
     // left_mg.move(-50);
     // right_mg.move(-50);
@@ -69,7 +69,7 @@ void rightSoloAWP() {
     lower.move(127);
     middle.move(127);
 
-    chassis.moveToPoint(-52, 39, 1000, {.maxSpeed=80});
+    chassis.moveToPoint(-52, 47, 1000, {.maxSpeed=80});
     pros::delay(200);
     level.set_value(true);
     chassis.turnToHeading(270, 700, {.minSpeed=20}, false);

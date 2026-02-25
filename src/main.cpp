@@ -61,7 +61,7 @@ const char* auton_names[] = {
 	"PID Tune",
 	"Super Middle Goal 2 - No Hit",
 	"Right 7 Ball TRACTION",
-	"Skills Experimental",
+	"DERR",
 	"Right 4 Ball",
 	"New Safe Skills",
 };
