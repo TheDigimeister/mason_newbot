@@ -37,7 +37,7 @@ void newSafeSkills(){
 
     #pragma region middleGoalScore
 
-    chassis.turnToHeading(90, 1100, {.minSpeed=14}, false);
+    chassis.turnToHeading(90, 1100, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(back_dist.get() * MM_TO_IN, BACK_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get() * MM_TO_IN, LEFT_DIST_OFFSET, NORTH),chassis.getPose().theta);
     matchload.set_value(false);
     lower.move(127);
@@ -67,7 +67,7 @@ void newSafeSkills(){
     
     int timeout = 0;
     bool redDetected = false;
-    while (timeout <= 300 && redDetected == false) {
+    while (timeout <= 230 && redDetected == false) {
         if(fabs(roller_optical.get_hue() - 9.0) <= 2.0 && roller_optical.get_proximity() > 170){
             redDetected = true;
             upper.move(0);
@@ -106,9 +106,9 @@ void newSafeSkills(){
     });
     quintic::moveToPoint(chassis,-47, 46, 3000, {.async=false});
     level.set_value(true);
-    chassis.turnToHeading(270, 1000, {.minSpeed=14}, false);
+    chassis.turnToHeading(270, 1000, {.minSpeed=20}, false);
     quintic::moveToPoint(chassis, -64, 47, 2000, {.async=false});
-    // chassis.moveToPose(-51, 47, 270, 3000, {.lead=0.3, .minSpeed=14}, false);
+    // chassis.moveToPose(-51, 47, 270, 3000, {.lead=0.3, .minSpeed=20}, false);
     level.set_value(true);
     // left_mg.move(50);
     // right_mg.move(50);
@@ -120,7 +120,7 @@ void newSafeSkills(){
     level.set_value(true);
     descore.set_value(true);
     matchload.set_value(true);
-    chassis.turnToHeading(270, 1000, {.minSpeed=14}, false);
+    chassis.turnToHeading(270, 1000, {.minSpeed=20}, false);
     upper.move(0);
 
     chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, NORTH), chassis.getPose().theta);
@@ -158,7 +158,7 @@ void newSafeSkills(){
         upper.move(127);
     }}; 
 
-    chassis.turnToHeading(90, 1000, {.direction=lemlib::AngularDirection::CW_CLOCKWISE, .minSpeed=14}, false);
+    chassis.turnToHeading(90, 1000, {.direction=lemlib::AngularDirection::CW_CLOCKWISE, .minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, NORTH), chassis.getPose().theta);
     
     quintic::moveToPoint(chassis, 26, 49, 2000, {.forwards=false, .async=false});
@@ -175,7 +175,7 @@ void newSafeSkills(){
     // right_mg.move(50);
     // pros::delay(200);
 
-    chassis.turnToHeading(90, 1000, {.minSpeed=14}, false);
+    chassis.turnToHeading(90, 1000, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, NORTH), chassis.getPose().theta);
     lower.move(127);
     middle.move(127);
@@ -201,7 +201,7 @@ void newSafeSkills(){
     // right_mg.move(-50);
     // pros::delay(150);
 
-    // chassis.turnToHeading(90, 1000, {.minSpeed=14}, false);
+    // chassis.turnToHeading(90, 1000, {.minSpeed=20}, false);
     // chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, NORTH), chassis.getPose().theta);
 
 
@@ -221,7 +221,7 @@ void newSafeSkills(){
     middle.move(0);
     upper.move(127);
 
-    chassis.turnToHeading(90, 1000, {.minSpeed=14}, false);
+    chassis.turnToHeading(90, 1000, {.minSpeed=20}, false);
 
     chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST),positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, NORTH),chassis.getPose().theta);
 
@@ -239,11 +239,11 @@ void newSafeSkills(){
     // right_mg.move(50);
     // pros::delay(200);
     // chassis.swingToPoint(24, 24, lemlib::DriveSide::RIGHT, 1500, {.minSpeed=50}, false);
-    chassis.turnToHeading(180,2000,{.direction=lemlib::AngularDirection::CW_CLOCKWISE, .minSpeed=30}, false);
+    chassis.turnToHeading(180,1000,{.direction=lemlib::AngularDirection::CW_CLOCKWISE, .minSpeed=50}, false);
     chassis.setPose(positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, EAST), positionFromRaycast(back_dist.get()*MM_TO_IN, BACK_DIST_OFFSET, NORTH), chassis.getPose().theta);
 
     // quintic::moveToPoint(chassis,24, 24, 1500, {.forwards=true, .async=true});
-    // chassis.moveToPoint(24, 24, 1500, {.forwards=true, .minSpeed=14, .earlyExitRange=5}, false);
+    // chassis.moveToPoint(24, 24, 1500, {.forwards=true, .minSpeed=20, .earlyExitRange=5}, false);
     
     // pros::delay(800);
     // matchload.set_value(true);
@@ -266,13 +266,13 @@ void newSafeSkills(){
     //     }
     //     upper.move(0);
     // });
-    // chassis.turnToPoint(24, -26, 1000, {.forwards=true, .minSpeed=14, .earlyExitRange=5});
-    // chassis.moveToPoint(24, -26, 2000, {.forwards=true, .minSpeed=14});
+    // chassis.turnToPoint(24, -26, 1000, {.forwards=true, .minSpeed=20, .earlyExitRange=5});
+    // chassis.moveToPoint(24, -26, 2000, {.forwards=true, .minSpeed=20});
     // pros::delay(800);
     // matchload.set_value(true);
     // pros::delay(900);
-    // chassis.turnToPoint(47, -47, 1000, {.minSpeed=14, .earlyExitRange=5});
-    quintic::moveToPoint(chassis, 50, -49, 3000, {.forwards=true, .async=false});
+    // chassis.turnToPoint(47, -47, 1000, {.minSpeed=20, .earlyExitRange=5});
+    quintic::moveToPoint(chassis, 50, -47, 2800, {.forwards=true, .async=false, .settleRange=3});
     matchload.set_value(true);
     // quintic::moveToPoint(chassis,24, -48.5, 2000, {.forwards=false, .async=false});
     // pros::delay(1800);
@@ -291,7 +291,7 @@ void newSafeSkills(){
         upper.move(0);
     });
 
-    chassis.turnToHeading(90, 1000, {.minSpeed=14}, false);
+    chassis.turnToHeading(90, 1000, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, EAST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
 
     quintic::moveToPoint(chassis,62, -47, 2000, {.forwards=true, .async=false});
@@ -310,7 +310,7 @@ void newSafeSkills(){
     // upper.move(-127);
 
     roller_optical.set_led_pwm(100);
-    chassis.turnToPoint(36, -64, 1000, {.forwards=false, .minSpeed=14}, false);
+    chassis.turnToPoint(36, -64, 1000, {.forwards=false, .minSpeed=20}, false);
 
     lower.move(0);
     middle.move(0);
@@ -345,21 +345,21 @@ void newSafeSkills(){
     // lower.move(127);
     // });
    
-    chassis.moveToPose(24, -64, 270, 2000, {.forwards=false, .minSpeed=80}, false);
+    chassis.moveToPose(24, -63, 270, 2000, {.forwards=false, .minSpeed=80}, false);
     level.set_value(true);
 
-    chassis.moveToPoint(-27, -64, 2700, {.forwards=false, .maxSpeed=80, .minSpeed=50}, false);
+    chassis.moveToPoint(-27, -64, 2700, {.forwards=false, .minSpeed=50}, false);
     // return;
     // chassis.turnToHeading(90, 500, {}, false);
     // chassis.setPose(positionFromRaycast(back_dist.get()*MM_TO_IN, BACK_DIST_OFFSET, WEST), positionFromRaycast(right_dist.get()*MM_TO_IN, RIGHT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
 
 
-    chassis.moveToPoint(-38, -51, 2000, {.forwards=false, .minSpeed=14}, false);
+    chassis.moveToPoint(-38, -53, 2000, {.forwards=false, .minSpeed=20}, false);
     matchload.set_value(true);
     
     level.set_value(true);
 
-    chassis.turnToHeading(270, 1000, {.minSpeed=14}, false);
+    chassis.turnToHeading(270, 1000, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
 
     #pragma region SWLongGoalScore1
@@ -375,7 +375,7 @@ void newSafeSkills(){
     quintic::moveToPoint(chassis,-24, -48.5, 2000, {.forwards=false, .async=false});
     // pros::delay(1800);
 
-    chassis.turnToHeading(270, 1000, {.minSpeed=14}, false);
+    chassis.turnToHeading(270, 1000, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     upper.move(0);
     
@@ -409,28 +409,28 @@ void newSafeSkills(){
 
     // chassis.turnToPoint(-24, -48, 500, {.forwards=false}, false);
     // chassis.moveToPoint(-25, -52, 1200, {.forwards=false, .maxSpeed=60});
-    quintic::moveToPoint(chassis,-26, -48.5, 3000, {.forwards=false, .async=true});
+    quintic::moveToPoint(chassis,-25, -49, 3000, {.forwards=false, .async=true});
     pros::delay(500);
     matchload.set_value(false);
     pros::delay(3100);
 
-    // chassis.turnToHeading(270, 1000, {.minSpeed=14}, false);
+    // chassis.turnToHeading(270, 1000, {.minSpeed=20}, false);
     // chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
     upper.move(0);
     
     left_mg.move(50);
     right_mg.move(50);
     pros::delay(200);
-    chassis.turnToHeading(270, 700, {.minSpeed=14}, false);
+    chassis.turnToHeading(270, 700, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(fmax(front_dist.get(),front_disttwo.get())*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
 
     #pragma region lowGoalScore
-    chassis.swingToPoint(-15, -9.5, lemlib::DriveSide::RIGHT, 1000, {.minSpeed=30}, false);
+    chassis.swingToPoint(-16, -9.25, lemlib::DriveSide::RIGHT, 1000, {.minSpeed=30}, false);
     lower.move(127);
     middle.move(0);
     upper.move(0);
     // chassis.moveToPose(-7, -3, 45, 2000, {.maxSpeed=40}, false);
-    quintic::moveToPoint(chassis, -15, -9.5, 3000, {.async=false});
+    quintic::moveToPoint(chassis, -16, -9.25, 3000, {.async=false});
     intake_up.set_value(true);
     lower.move(-60);
     middle.move(-60);
@@ -438,15 +438,15 @@ void newSafeSkills(){
     pros::delay(2000);
 
     #pragma region finalParking
-    chassis.moveToPose(-70, -19, 90, 1500, {.forwards=false, .horizontalDrift=15, .lead=0.3, .maxSpeed=70}, false);
-    chassis.turnToHeading(350, 1100, {.minSpeed=14}, false);
+    chassis.moveToPose(-70, -19, 90, 1700, {.forwards=false, .horizontalDrift=15, .lead=0.3, .maxSpeed=70}, false);
+    chassis.turnToHeading(340, 1100, {.minSpeed=30}, false);
     lower.move(-127);
     middle.move(-127);
-    left_mg.move(80);
-    right_mg.move(80);
+    left_mg.move(70);
+    right_mg.move(70);
     pros::delay(400);
     timeout = 0;
-    while((fmax(front_dist.get(),front_disttwo.get()) >= 1925 || fmax(front_dist.get(),front_disttwo.get()) <= 1500) && timeout <= 60){
+    while((fmax(front_dist.get(),front_disttwo.get()) >= 1925 || fmax(front_dist.get(),front_disttwo.get()) <= 1500) && timeout <= 50){
         timeout++;
         pros::delay(10);
     }
