@@ -29,11 +29,11 @@ void newSafeSkills(){
 
 
     #pragma region redParkingClear
-    left_mg.move(64);
+    left_mg.move(57);
     right_mg.move(64);
     while(front_disttwo.get() >= 1750 || front_disttwo.get() <= 600){pros::delay(20);}
     // matchload.set_value(true);
-    while(front_disttwo.get() >= 1100 || front_disttwo.get() <= 600){pros::delay(20);}
+    while(front_disttwo.get() >= 1000 || front_disttwo.get() <= 600){pros::delay(20);}
 
     #pragma region middleGoalScore
 
@@ -51,8 +51,8 @@ void newSafeSkills(){
     // chassis.setPose(positionFromRaycast(front_dist.get() * MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(right_dist.get() * MM_TO_IN, RIGHT_DIST_OFFSET, NORTH),chassis.getPose().theta);
 
     pros::delay(1200);
-    chassis.turnToPoint(-10, 12.5, 1500, {.forwards=false, .maxSpeed=50, .minSpeed=16}, false);
-    quintic::moveToPoint(chassis,-10, 12.5, 1500, {.forwards=false, .async=false});
+    // chassis.turnToPoint(-10, 12.5, 1500, {.forwards=false, .maxSpeed=50, .minSpeed=16}, false);
+    quintic::moveToPoint(chassis,-11.25, 14.25, 2200, {.forwards=false, .async=false});
     matchload.set_value(true);
     // lower.move(0);
     // middle.move(0);
@@ -78,7 +78,7 @@ void newSafeSkills(){
         if(timeout <= 70) {
             lower.move(127);
             middle.move(40);
-            upper.move(40);
+            upper.move(30);
         } else if (timeout > 70) {
             lower.move(127);
             middle.move(30);
@@ -104,6 +104,7 @@ void newSafeSkills(){
         }
         upper.move(0);
     });
+    // return;
     quintic::moveToPoint(chassis,-47, 46, 3000, {.async=false});
     level.set_value(true);
     chassis.turnToHeading(270, 1000, {.minSpeed=20}, false);
@@ -271,8 +272,9 @@ void newSafeSkills(){
     // pros::delay(800);
     // matchload.set_value(true);
     // pros::delay(900);
-    // chassis.turnToPoint(47, -47, 1000, {.minSpeed=20, .earlyExitRange=5});
-    quintic::moveToPoint(chassis, 50, -47, 2800, {.forwards=true, .async=false, .settleRange=3});
+    chassis.moveToPoint(30, -24, 2000, {.maxSpeed=100, .minSpeed=20, .earlyExitRange=5}, false);
+    chassis.turnToPoint(50, -47, 500, {.forwards=true, .minSpeed=20}, false);
+    quintic::moveToPoint(chassis, 50, -47, 1500, {.forwards=true, .async=false, .settleRange=3});
     matchload.set_value(true);
     // quintic::moveToPoint(chassis,24, -48.5, 2000, {.forwards=false, .async=false});
     // pros::delay(1800);
@@ -345,7 +347,7 @@ void newSafeSkills(){
     // lower.move(127);
     // });
    
-    chassis.moveToPose(24, -63, 270, 2000, {.forwards=false, .minSpeed=80}, false);
+    chassis.moveToPose(24, -64, 270, 2000, {.forwards=false, .lead=0.4, .minSpeed=80}, false);
     level.set_value(true);
 
     chassis.moveToPoint(-27, -64, 2700, {.forwards=false, .minSpeed=50}, false);
@@ -444,9 +446,9 @@ void newSafeSkills(){
     middle.move(-127);
     left_mg.move(70);
     right_mg.move(70);
-    pros::delay(400);
+    pros::delay(450);
     timeout = 0;
-    while((fmax(front_dist.get(),front_disttwo.get()) >= 1925 || fmax(front_dist.get(),front_disttwo.get()) <= 1500) && timeout <= 50){
+    while((fmax(front_dist.get(),front_disttwo.get()) >= 1925 || fmax(front_dist.get(),front_disttwo.get()) <= 1500) && timeout <= 55){
         timeout++;
         pros::delay(10);
     }

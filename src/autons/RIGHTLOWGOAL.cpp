@@ -59,7 +59,7 @@ void rightLowGoal() {
     chassis.moveToPose(-36,-32, 90, 3000, {.forwards=false, .minSpeed=50}, false);
     intake_up.set_value(false);
     descore.set_value(false);
-    chassis.moveToPoint(-10, -32, 1700, {.maxSpeed=60});
+    chassis.moveToPoint(-12, -32, 1700, {.maxSpeed=60});
     // chassis.turnToPoint(-24, 23, 2000, {.minSpeed=20});
     // chassis.moveToPoint(-24,23,1200, {.maxSpeed=80});
 

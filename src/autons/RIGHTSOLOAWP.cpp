@@ -16,11 +16,11 @@ void rightSoloAWP() {
         while(roller_dist.get() > 50) {upper.move(50);}
         upper.move(0);
     });
+    matchload.set_value(true);
 
-    chassis.moveToPoint(-48, -49, 2000, {.maxSpeed=100});
+    chassis.moveToPoint(-44, -49, 2000, {.maxSpeed=100});
     chassis.turnToHeading(270, 1000, {.minSpeed=20}, false);
     chassis.setPose(positionFromRaycast(front_dist.get()*MM_TO_IN, FRONT_DIST_OFFSET, WEST), positionFromRaycast(left_dist.get()*MM_TO_IN, LEFT_DIST_OFFSET, SOUTH), chassis.getPose().theta);
-    matchload.set_value(true);
 
     chassis.moveToPoint(-62, -48, 800, {.forwards=true, .maxSpeed=45}, true);
     pros::delay(800);
@@ -36,7 +36,7 @@ void rightSoloAWP() {
 
 
 
-    quintic::moveToPoint(chassis, -24, -49, 2000, {.forwards=false, .async=false});
+    quintic::moveToPoint(chassis, -24, -49, 1750, {.forwards=false, .async=false});
     matchload.set_value(false);
     upper.move(0);
 
@@ -50,7 +50,7 @@ void rightSoloAWP() {
     chassis.moveToPoint(-24,22,1200, {.maxSpeed=80});
     pros::delay(1000);
     matchload.set_value(true);
-    chassis.turnToHeading(315, 1300, {.minSpeed=20}, false);
+    chassis.turnToHeading(315, 1000, {.minSpeed=20}, false);
     left_mg.move(-40);
     right_mg.move(-40);
     pros::delay(700);

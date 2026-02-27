@@ -37,7 +37,7 @@ void superMiddleGoal(){
 
     
     // matchload
-    quintic::moveToPoint(chassis, -47.5, 40, 1800, {.forwards=true, .async=false});
+    quintic::moveToPoint(chassis, -47.5, 41.5, 2000, {.forwards=true, .async=false});
     
     matchload.set_value(true);
     chassis.turnToHeading(270, 800, {.maxSpeed=127, .minSpeed=20}, false);
@@ -69,7 +69,7 @@ void superMiddleGoal(){
     right_mg.move(50);
     pros::delay(250);
     chassis.turnToHeading(280, 900, {.minSpeed=20});
-    chassis.moveToPoint(-13, 36, 1000, {.forwards=false});
+    chassis.moveToPoint(-11, 36, 1000, {.forwards=false});
 
     odom.set_value(false);
     matchload.set_value(false);
